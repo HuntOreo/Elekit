@@ -1,7 +1,9 @@
-// Class based programming
-//      Each element will have a parent "element" class used for general tags.
-//      more common tags like p, headers, buttons, specific divs such as containers or wrappers, 
-//           will be extended children of Element and will have more specific methods and properties for it
+//  Class based programming
+//    Each element will have a parent "element" class used for general tags.
+//    More common tags like p, headers, buttons, 
+//      specific divs such as containers or wrappers, 
+//      will be extended children of Element and 
+//      will have more specific methods and properties for it
 
 class Elem {
   constructor({ tag, selectors, content }, styleTemplate) {
@@ -119,7 +121,7 @@ class Button extends Elem {
     }
 
     // Assign default styling
-    this.padding = '5px 10px';
+    this.padding = '10px';
     this.style.borderRadius = '5px';
     this.style.border = 'none';
   }
