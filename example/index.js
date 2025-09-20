@@ -1,4 +1,4 @@
-import { Elem } from "../elekit/elekit.js";
+import { Elem, Button } from "../elekit/elekit.js";
 
 const body = document.querySelector('body');
 
@@ -8,13 +8,13 @@ const body = document.querySelector('body');
   Constructor({tag: "", *selectors: "" || [], *content: "" }, *template: {})
 
   Takes an object containing key info for the element, 
-  and an optional styling template to immediatly apply styling on creation.
+  and an optional styling template to immediately apply styling on creation.
 
   tag = the specific tag being created
   selectors = the classes being applied
   content = what is populating the new element
     ! This can take pure html as well, rather than just text. 
-    ! `<h1>Content</h1>` is valid and will render as aspected.
+    ! `<h1>Content</h1>` is valid and will render as expected
   template = an optional object containing css properties that will be applied on creation.
 */
 const container = new Elem({
@@ -39,7 +39,7 @@ const containerTemp = {
 container.applyTemplate(containerTemp);
 
 /* 
-  Templates can be created for applying repetative styling onto elements, 
+  Templates can be created for applying repetitive styling onto elements, 
   similar to classes, on creation of the element.
 
   format: { propertyName: propertyValue, nth... }
@@ -51,10 +51,31 @@ const styleTemplate = {
   color: 'gray'
 }
 
-const childEl = new Elem({ 
-  tag: 'p', 
-  content: 'yippee' 
+const childEl = new Elem({
+  tag: 'p',
+  content: 'yippee'
 }, styleTemplate); // Pass style template on instantiation
 
 container.parent(body); // set parent to body (appends element to body tag)
 container.append(childEl); // append a child element
+/*
+*
+*
+*
+*
+*
+*
+*
+*/
+// Specific Elements //
+/*
+*/
+// Button
+const btn = new Button({ content: 'Submit', type: 'submit' });
+
+container.append(btn);
+btn.style.maxWidth = '100px';
+btn.addListener('click', (event) => {
+  event.preventDefault();
+  alert('clicked me!')
+});

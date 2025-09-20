@@ -4,13 +4,13 @@
 //           will be extended children of Element and will have more specific methods and properties for it
 
 class Elem {
-  constructor ({ tag, selectors, content }, styleTemplate) {
+  constructor({ tag, selectors, content }, styleTemplate) {
     this._element = document.createElement(tag);
-    this._id = crypto.randomUUID(); // Asigns its own id
+    this._id = crypto.randomUUID(); // Assigns its own id
     this._element.dataset.id = this._id;
     this._children = [];
     if (selectors) { this.#assignClasses(selectors); };
-    
+
     // Content can be HTML to make the process of adding 
     // child elements easier for smaller components.
     if (content) { this._element.innerHTML = content };
@@ -18,7 +18,7 @@ class Elem {
     // Allows for the inclusion of a styling template to apply 
     // on creation of an element. 
     // Format is {property: value, nth}
-    if (styleTemplate) {this.#applyAllStyle(styleTemplate)};
+    if (styleTemplate) { this.#applyAllStyle(styleTemplate) };
   }
 
   get element() { return this._element; }
@@ -33,23 +33,23 @@ class Elem {
   set padding(value) { this.#applyStyle('padding', value); }
   set margin(value) { this.#applyStyle('margin', value); }
   set display(value) { this.#applyStyle('display', value); }
-  
+
   applyTemplate(template) { this.#applyAllStyle(template); }
-  
+
   parent(parent) { parent.append(this._element); }
-  
+
   append(children) {
     const arrayFlag = Array.isArray(children);
-    if (arrayFlag) { 
+    if (arrayFlag) {
       for (let child of children) {
         this._children.push(child);
-        this._element.append(child.element); 
+        this._element.append(child.element);
       }
     }
 
-    if (!arrayFlag) { 
+    if (!arrayFlag) {
       this._children.push(children);
-      this._element.append(children.element); 
+      this._element.append(children.element);
     }
   }
 
@@ -73,7 +73,7 @@ class Elem {
   // HELPER FUNCTIONS
   #applyStyle = (property, value) => {
     this._element.style[property] = value;
-  } 
+  }
 
   #applyAllStyle = (styles) => {
     for (let property in styles) {
@@ -102,6 +102,42 @@ class Elem {
   }
 }
 
+class Button extends Elem {
+  constructor(element, listener) {
+    if (typeof element === "string") {
+      super({ tag: 'button', content: element });
+      this.#assignType('button');
+    } else {
+      const { selectors, content, type } = element;
+      super({ tag: 'button', selectors, content });
+
+      type ? this.#assignType(type) : this.#assignType('button');
+    }
+    if (listener) {
+      this._listener = listener;
+      this.#assignListener(listener.type, listener.callback);
+    }
+
+    // Assign default styling
+    this.padding = '5px 10px';
+    this.style.borderRadius = '5px';
+    this.style.border = 'none';
+  }
+
+  addListener(type, callback) { this.#assignListener(type, callback); }
+
+  // HELPER FUNCTION
+  #assignListener = (type, callback) => {
+    this.element.addEventListener(type, callback);
+  }
+
+  #assignType = (type) => {
+    this._element.type = type;
+    console.log(this._element);
+  }
+}
+
 export {
   Elem,
+  Button
 }
