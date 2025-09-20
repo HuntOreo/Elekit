@@ -2,21 +2,59 @@ import { Elem } from "../elekit/elekit.js";
 
 const body = document.querySelector('body');
 
-const styleTemp = {
-  backgroundColor: 'lightcoral',
-  padding: '10px'
+/* 
+  * = optional.
+
+  Constructor({tag: "", *selectors: "" || [], *content: "" }, *template: {})
+
+  Takes an object containing key info for the element, 
+  and an optional styling template to immediatly apply styling on creation.
+
+  tag = the specific tag being created
+  selectors = the classes being applied
+  content = what is populating the new element
+    ! This can take pure html as well, rather than just text. 
+    ! `<h1>Content</h1>` is valid and will render as aspected.
+  template = an optional object containing css properties that will be applied on creation.
+*/
+const container = new Elem({
+  tag: 'div',
+  selectors: 'container',
+  content: `<h1>Hello world!</h1>`
+});
+
+// Apply styling after element is created.
+container.background = 'lightcoral';
+container.display = 'flex';
+container.style.flexDirection = 'column';
+container.style.fontFamily = 'Trebuchet MS';
+
+// Can be passed a styling template as an alternative
+const containerTemp = {
+  padding: '0 10px',
+  fontWeight: '400',
+  color: 'lightgreen'
 }
 
-const el = new Elem({
-  tag: 'div',
-  selectors: 'classOne',
-  content: `<h1>Hello world!</h1>`
-}, styleTemp);
+container.applyTemplate(containerTemp);
 
-const childEl = new Elem({ tag: 'p', content: 'yippee' }, {background: 'lightblue'});
-el.append(childEl);
-el.removeClass('classOne');
-el.addClass('container');
-el.adopter(body);
+/* 
+  Templates can be created for applying repetative styling onto elements, 
+  similar to classes, on creation of the element.
 
-el.removeChild(childEl.id);
+  format: { propertyName: propertyValue, nth... }
+*/
+const styleTemplate = {
+  background: 'lightblue',
+  textAlign: 'center',
+  fontFamily: 'system-ui',
+  color: 'gray'
+}
+
+const childEl = new Elem({ 
+  tag: 'p', 
+  content: 'yippee' 
+}, styleTemplate); // Pass style template on instantiation
+
+container.parent(body); // set parent to body (appends element to body tag)
+container.append(childEl); // append a child element

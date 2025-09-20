@@ -6,7 +6,8 @@
 class Elem {
   constructor ({ tag, selectors, content }, styleTemplate) {
     this._element = document.createElement(tag);
-    this._id = crypto.randomUUID();
+    this._id = crypto.randomUUID(); // Asigns its own id
+    this._element.dataset.id = this._id;
     this._children = [];
     if (selectors) { this.#assignClasses(selectors); };
     
@@ -31,8 +32,11 @@ class Elem {
   set fontSize(value) { this.#applyStyle('fontSize', value); }
   set padding(value) { this.#applyStyle('padding', value); }
   set margin(value) { this.#applyStyle('margin', value); }
-
-  adopter(parent) { parent.append(this._element); }
+  set display(value) { this.#applyStyle('display', value); }
+  
+  applyTemplate(template) { this.#applyAllStyle(template); }
+  
+  parent(parent) { parent.append(this._element); }
   
   append(children) {
     const arrayFlag = Array.isArray(children);
@@ -65,7 +69,8 @@ class Elem {
   removeClass(...classes) {
     classes.forEach(name => this._element.classList.remove(name));
   }
-  // PRIVATE METHODS
+
+  // HELPER FUNCTIONS
   #applyStyle = (property, value) => {
     this._element.style[property] = value;
   } 
