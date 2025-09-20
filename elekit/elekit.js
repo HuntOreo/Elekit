@@ -4,28 +4,15 @@
 //           will be extended children of Element and will have more specific methods and properties for it
 
 class Elem {
-  // common ways I manipulate elements: 
-    // Applying classes,
-    // Populate with text content,
-    // Apply padding
-    // Apply margin
-    // Apply background color
-    // Apply font size
-    // Append children
-
-  // Less common, but still important:
-    // Add id
-    // Add dataset
-    // Remove classes
-    // Remove child element
-
   constructor ({ tag, selectors, content }, styleTemplate) {
     this._element = document.createElement(tag);
+    this._id = crypto.randomUUID();
+    this._children = [];
     if (selectors) { this.#assignClasses(selectors); };
     
     // Content can be HTML to make the process of adding 
     // child elements easier for smaller components.
-    if (content) this._element.innerHTML = content;
+    if (content) { this._element.innerHTML = content };
 
     // Allows for the inclusion of a styling template to apply 
     // on creation of an element. 
@@ -36,7 +23,14 @@ class Elem {
   get element() { return this._element; }
   get children() { return this._element.children; }
   get style() { return this._element.style; }
+  get id() { return this._id; }
+
+  set children(elements) { this._children = [...elements] }
   set background(value) { this.#applyStyle('background', value); }
+  set fontColor(value) { this.#applyStyle('color', value); }
+  set fontSize(value) { this.#applyStyle('fontSize', value); }
+  set padding(value) { this.#applyStyle('padding', value); }
+  set margin(value) { this.#applyStyle('margin', value); }
 
   adopter(parent) { parent.append(this._element); }
   
@@ -44,13 +38,33 @@ class Elem {
     const arrayFlag = Array.isArray(children);
     if (arrayFlag) { 
       for (let child of children) {
-        this._element.append(child); 
+        this._children.push(child);
+        this._element.append(child.element); 
       }
     }
 
-    if (!arrayFlag) { this._element.append(children); }
+    if (!arrayFlag) { 
+      this._children.push(children);
+      this._element.append(children.element); 
+    }
   }
 
+  removeChild(childID) {
+    let child;
+    const filteredChildren = this._children.filter(item => {
+      item.id != childID ? item : child = item;
+    });
+    this._element.removeChild(child.element);
+    this.#updateChildren(filteredChildren);
+  }
+
+  addClass(...classes) {
+    this.#assignClasses(classes);
+  }
+
+  removeClass(...classes) {
+    classes.forEach(name => this._element.classList.remove(name));
+  }
   // PRIVATE METHODS
   #applyStyle = (property, value) => {
     this._element.style[property] = value;
@@ -74,8 +88,14 @@ class Elem {
     }
   }
 
+  #updateChildren = (...children) => {
+    // reset children
+    this._children = [];
+    children.forEach(child => {
+      this._children.push(child);
+    })
+  }
 }
-
 
 export {
   Elem,
