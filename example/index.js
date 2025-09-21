@@ -43,6 +43,8 @@ containerOne.applyTemplate(containerTemp);
   similar to classes, on creation of the element.
 
   format: { propertyName: propertyValue, nth... }
+
+  templates can be added after the fact using the applyTemplate method.
 */
 const styleTemplate = {
   background: 'lightblue',
