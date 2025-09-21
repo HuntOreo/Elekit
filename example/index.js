@@ -20,7 +20,7 @@ const body = document.querySelector('body');
 const containerOne = new Elem({
   tag: 'div',
   selectors: 'container',
-  content: `<h1>Hello world!</h1>`
+  content: `<h1>Hello world!</h1>` // passed html instead of pure text
 });
 
 // Apply styling after element is created.
@@ -36,7 +36,7 @@ const containerTemp = {
   color: 'lightgreen'
 }
 
-containerOne.applyTemplate(containerTemp);
+containerOne.applyTemplate(containerTemp); // Pass template post-instantiation
 
 /* 
   Templates can be created for applying repetitive styling onto elements, 
@@ -73,7 +73,7 @@ containerOne.appendEl(childEl); // append a child element
 */
 // Button
 const containerTwo = new Elem({ tag: 'div', selectors: 'container' });
-const btn = new Button({ content: 'Submit', type: 'submit' });
+const btn = new Button({ content: 'Click me!', type: 'submit' }); // Type is the same as the html attribute
 btn.addListener('click', (event) => {
   event.preventDefault();
   alert('clicked me!');
@@ -121,7 +121,7 @@ headerOne.changeSize(1); // Change element from header 2 to header 1;
 * Another way to build containers and wrappers is using the Container subclass. 
 *
 * new Container(
-*    {type: 'container' || 'wrapper', selectors: ""}, 
+*    {type: 'container' || 'wrapper', selectors: "" || []}, 
 *    template: {propertyName: 'propertyValue'}
 * )
 *
