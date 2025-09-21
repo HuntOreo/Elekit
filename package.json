@@ -1,0 +1,26 @@
+{
+  "name": "elekit",
+  "version": "1.0.0",
+  "description": "'Simple library for manipulating the DOM'",
+  "main": "./elekit/elekit.js",
+  "directories": {
+    "example": "example"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/HuntOreo/elekit.git"
+  },
+  "keywords": [
+    "html",
+    "js"
+  ],
+  "author": "Hunter Oreair",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HuntOreo/elekit/issues"
+  },
+  "homepage": "https://github.com/HuntOreo/elekit#readme"
+}
