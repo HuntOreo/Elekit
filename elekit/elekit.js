@@ -38,20 +38,24 @@ class Elem {
 
   applyTemplate(template) { this.#applyAllStyle(template); }
 
-  parent(parent) { parent.append(this._element); }
+  parent(container) {
+    console.log(this);
+    container.appendEl(this);
+  }
 
-  append(children) {
-    const arrayFlag = Array.isArray(children);
+  appendEl(node) {
+    console.log(node);
+    const arrayFlag = Array.isArray(node);
     if (arrayFlag) {
-      for (let child of children) {
+      for (let child of node) {
         this._children.push(child);
         this._element.append(child.element);
       }
     }
 
     if (!arrayFlag) {
-      this._children.push(children);
-      this._element.append(children.element);
+      this._children.push(node);
+      this._element.append(node.element);
     }
   }
 
@@ -135,7 +139,6 @@ class Button extends Elem {
 
   #assignType = (type) => {
     this._element.type = type;
-    console.log(this._element);
   }
 }
 

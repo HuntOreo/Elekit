@@ -56,8 +56,8 @@ const childEl = new Elem({
   content: 'yippee'
 }, styleTemplate); // Pass style template on instantiation
 
-container.parent(body); // set parent to body (appends element to body tag)
-container.append(childEl); // append a child element
+body.append(container.element); // set parent to body (appends element to body tag)
+container.appendEl(childEl); // append a child element
 /*
 *
 *
@@ -71,11 +71,17 @@ container.append(childEl); // append a child element
 /*
 */
 // Button
+const containerTwo = new Elem({ tag: 'div', selectors: 'container' });
 const btn = new Button({ content: 'Submit', type: 'submit' });
-
-container.append(btn);
-btn.style.maxWidth = '100px';
 btn.addListener('click', (event) => {
   event.preventDefault();
-  alert('clicked me!')
+  alert('clicked me!');
 });
+const header = new Elem({ tag: 'h1', content: 'Container Two' });
+
+// header.parent(containerTwo);
+// btn.parent(containerTwo);
+containerTwo.appendEl(header);
+containerTwo.appendEl(btn);
+
+body.append(containerTwo.element)
