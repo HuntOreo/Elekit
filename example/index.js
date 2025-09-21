@@ -1,4 +1,4 @@
-import { Elem, Button, Header } from "../elekit/elekit.js";
+import { Elem, Button, Header, Container } from "../elekit/elekit.js";
 
 const body = document.querySelector('body');
 
@@ -109,6 +109,39 @@ containerThree.appendEl(elements);
 headerOne.changeSize(1); // Change element from header 2 to header 1;
 /*
 *
+*
+// Container 
+* Another way to build containers and wrappers is using the Container subclass. 
+*
+* new Container(
+*    {type: 'container' || 'wrapper', selectors: ""}, 
+*    template: {propertyName: 'propertyValue'}
+* )
+*
+* To specify display type like flex or grid, 
+* and style them accordingingly, use style templates. 
+*
+*/
+
+const containerFour = new Container({type: 'container'}, {
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
+  background: 'lightblue',
+  minHeight: '200px'
+});
+
+const box = new Container({selectors: 'box'}, {
+  width: '50px',
+  height: '50px',
+  background: 'hotpink'
+})
+
+box.parent(containerFour);
+
+/*
+*
 **
 ***
 **
@@ -121,3 +154,4 @@ headerOne.changeSize(1); // Change element from header 2 to header 1;
 body.append(containerOne.DOMElement);
 body.append(containerTwo.DOMElement);
 body.append(containerThree.DOMElement);
+body.append(containerFour.DOMElement);

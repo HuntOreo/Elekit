@@ -181,7 +181,7 @@ class Para extends Elem {
 }
 
 class Container extends Elem { 
-  constructor ({ selectors, type }, template) {
+  constructor ({ type, selectors }, template) {
     super({
       tag: 'div',
       selectors: selectors
