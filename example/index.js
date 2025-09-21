@@ -84,21 +84,27 @@ containerTwo.appendEl(btn);
 */
 // Header
 
-const headerTemplate = {
+const headerOne = new Header({
+  size: 2, // size of the header (1-6)
+  content: 'Container Three',
+}, { color: 'purple' });
+
+const containerThreeTemplate = {
   background: 'lightgreen',
-  color: 'purple',
   fontFamily: 'system-ui'
 }
 
-const containerThree = new Elem({tag: 'div', selectors: 'container'});
-const headerOne = new Header({
-  size: 2,
-  content: 'Container Three',
-}, headerTemplate);
+const containerThree = new Elem({tag: 'div', selectors: 'container'}, containerThreeTemplate);
 
-containerThree.appendEl(headerOne);
+const contentOne = new Elem({ tag: 'p', content: 
+  `<b>WARNING</b>: This is a paragraph!`
+ }, { color: 'red' });
 
-headerOne.changeSize(1);
+const elements = [headerOne, contentOne];
+
+containerThree.appendEl(elements);
+
+headerOne.changeSize(1); // Change element from header 2 to header 1;
 /*
 *
 **
