@@ -180,9 +180,26 @@ class Para extends Elem {
   }
 }
 
+class Container extends Elem { 
+  constructor ({ selectors, type }, template) {
+    super({
+      tag: 'div',
+      selectors: selectors
+    }, template);
+
+    if (type === 'container') {
+      this.addClass('container');
+    } else if (type === 'wrapper') {
+      this.addClass('wrapper');
+    }
+  }
+
+}
+
 export {
   Elem,
   Button,
   Header,
-  Para
+  Para,
+  Container
 }
