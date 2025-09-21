@@ -1,9 +1,8 @@
 //  Class based programming
-//    Each element will have a parent "element" class used for general tags.
+//    Each element will be a Elem class.
 //    More common tags like p, headers, buttons, 
 //      specific divs such as containers or wrappers, 
-//      will be extended children of Element and 
-//      will have more specific methods and properties for it
+//      will be subclasses of Elem.
 
 class Elem {
   constructor({ tag, selectors, content }, styleTemplate) {
@@ -14,7 +13,7 @@ class Elem {
     this._selectors = selectors;
     this._content = content;
     this._styles = {}
-    if (selectors) { this.#assignClasses(selectors); };
+    if (selectors) { this._assignClasses(selectors); };
 
     // Content can be HTML to make the process of adding 
     // child elements easier for smaller components.
@@ -23,7 +22,7 @@ class Elem {
     // Allows for the inclusion of a styling template to apply 
     // on creation of an element. 
     // Format is {property: value, nth}
-    if (styleTemplate) { this.#applyAllStyle(styleTemplate) };
+    if (styleTemplate) { this._applyAllStyle(styleTemplate) };
   }
 
   get DOMElement() { return this._DOM_Element; }
@@ -32,14 +31,15 @@ class Elem {
   get id() { return this._id; }
 
   set children(elements) { this._children = [...DOMElements] }
-  set background(value) { this.#applyStyle('background', value); }
-  set fontColor(value) { this.#applyStyle('color', value); }
-  set fontSize(value) { this.#applyStyle('fontSize', value); }
-  set padding(value) { this.#applyStyle('padding', value); }
-  set margin(value) { this.#applyStyle('margin', value); }
-  set display(value) { this.#applyStyle('display', value); }
+  set background(value) { this._applyStyle('background', value); }
+  set fontColor(value) { this._applyStyle('color', value); }
+  set fontSize(value) { this._applyStyle('fontSize', value); }
+  set fontFamily(family) { this._applyStyle(fontFamily, family) }
+  set padding(value) { this._applyStyle('padding', value); }
+  set margin(value) { this._applyStyle('margin', value); }
+  set display(value) { this._applyStyle('display', value); }
 
-  applyTemplate(template) { this.#applyAllStyle(template); }
+  applyTemplate(template) { this._applyAllStyle(template); }
 
   parent(container) {
     console.log(this);
@@ -67,11 +67,11 @@ class Elem {
       item.id != childID ? item : child = item;
     });
     this._DOM_Element.removeChild(child.DOMElement);
-    this.#updateChildren(filteredChildren);
+    this._updateChildren(filteredChildren);
   }
 
   addClass(...classes) {
-    this.#assignClasses(classes);
+    this._assignClasses(classes);
   }
 
   removeClass(...classes) {
@@ -79,18 +79,18 @@ class Elem {
   }
 
   // HELPER FUNCTIONS
-  #applyStyle = (property, value) => {
+  _applyStyle = (property, value) => {
     this._DOM_Element.style[property] = value;
     this._styles[property] = value;
   }
 
-  #applyAllStyle = (styles) => {
+  _applyAllStyle = (styles) => {
     for (let property in styles) {
-      this.#applyStyle(property, styles[property]);
+      this._applyStyle(property, styles[property]);
     }
   }
 
-  #assignClasses = (selectors) => {
+  _assignClasses = (selectors) => {
     if (Array.isArray(selectors)) {
       for (let selector of selectors) {
         this._DOM_Element.classList.add(selector);
@@ -102,7 +102,7 @@ class Elem {
     }
   }
 
-  #updateChildren = (...children) => {
+  _updateChildren = (...children) => {
     // reset children
     this._children = [];
     children.forEach(child => {
@@ -115,16 +115,16 @@ class Button extends Elem {
   constructor(element, listener) {
     if (typeof element === "string") {
       super({ tag: 'button', content: element });
-      this.#assignType('button');
+      this._assignType('button');
     } else {
       const { selectors, content, type } = element;
       super({ tag: 'button', selectors, content });
 
-      type ? this.#assignType(type) : this.#assignType('button');
+      type ? this._assignType(type) : this._assignType('button');
     }
     if (listener) {
       this._listener = listener;
-      this.#assignListener(listener.type, listener.callback);
+      this._assignListener(listener.type, listener.callback);
     }
 
     // Assign default styling
@@ -133,14 +133,14 @@ class Button extends Elem {
     this.style.border = 'none';
   }
 
-  addListener(type, callback) { this.#assignListener(type, callback); }
+  addListener(type, callback) { this._assignListener(type, callback); }
 
   // HELPER FUNCTION
-  #assignListener = (type, callback) => {
+  _assignListener = (type, callback) => {
     this.DOMElement.addEventListener(type, callback);
   }
 
-  #assignType = (type) => {
+  _assignType = (type) => {
     this._DOM_Element.type = type;
   }
 }
@@ -166,8 +166,23 @@ class Header extends Elem {
   }
 }
 
+class Para extends Elem {
+  constructor(element, template) {
+    if (typeof element === "string") {
+      super({ tag: 'p', content: element }, template);
+    } else {
+      super({ 
+        tag: 'p', 
+        selectors: element.selectors, 
+        content: element.content 
+      }, template);
+    }
+  }
+}
+
 export {
   Elem,
   Button,
-  Header
+  Header,
+  Para
 }
