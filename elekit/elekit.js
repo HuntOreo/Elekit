@@ -7,15 +7,18 @@
 
 class Elem {
   constructor({ tag, selectors, content }, styleTemplate) {
-    this._element = document.createElement(tag);
+    this._DOM_Element = document.createElement(tag);
     this._id = crypto.randomUUID(); // Assigns its own id
-    this._element.dataset.id = this._id;
+    this._DOM_Element.dataset.id = this._id;
     this._children = [];
+    this._selectors = selectors;
+    this._content = content;
+    this._styles = {}
     if (selectors) { this.#assignClasses(selectors); };
 
     // Content can be HTML to make the process of adding 
     // child elements easier for smaller components.
-    if (content) { this._element.innerHTML = content };
+    if (content) { this._DOM_Element.innerHTML = content };
 
     // Allows for the inclusion of a styling template to apply 
     // on creation of an element. 
@@ -23,12 +26,12 @@ class Elem {
     if (styleTemplate) { this.#applyAllStyle(styleTemplate) };
   }
 
-  get element() { return this._element; }
-  get children() { return this._element.children; }
-  get style() { return this._element.style; }
+  get DOMElement() { return this._DOM_Element; }
+  get children() { return this._DOM_Element.children; }
+  get style() { return this._DOM_Element.style; }
   get id() { return this._id; }
 
-  set children(elements) { this._children = [...elements] }
+  set children(elements) { this._children = [...DOMElements] }
   set background(value) { this.#applyStyle('background', value); }
   set fontColor(value) { this.#applyStyle('color', value); }
   set fontSize(value) { this.#applyStyle('fontSize', value); }
@@ -44,18 +47,17 @@ class Elem {
   }
 
   appendEl(node) {
-    console.log(node);
     const arrayFlag = Array.isArray(node);
     if (arrayFlag) {
       for (let child of node) {
         this._children.push(child);
-        this._element.append(child.element);
+        this._DOM_Element.append(child.DOMElement);
       }
     }
 
     if (!arrayFlag) {
       this._children.push(node);
-      this._element.append(node.element);
+      this._DOM_Element.append(node.DOMElement);
     }
   }
 
@@ -64,7 +66,7 @@ class Elem {
     const filteredChildren = this._children.filter(item => {
       item.id != childID ? item : child = item;
     });
-    this._element.removeChild(child.element);
+    this._DOM_Element.removeChild(child.DOMElement);
     this.#updateChildren(filteredChildren);
   }
 
@@ -73,12 +75,13 @@ class Elem {
   }
 
   removeClass(...classes) {
-    classes.forEach(name => this._element.classList.remove(name));
+    classes.forEach(name => this._DOM_Element.classList.remove(name));
   }
 
   // HELPER FUNCTIONS
   #applyStyle = (property, value) => {
-    this._element.style[property] = value;
+    this._DOM_Element.style[property] = value;
+    this._styles[property] = value;
   }
 
   #applyAllStyle = (styles) => {
@@ -90,12 +93,12 @@ class Elem {
   #assignClasses = (selectors) => {
     if (Array.isArray(selectors)) {
       for (let selector of selectors) {
-        this._element.classList.add(selector);
+        this._DOM_Element.classList.add(selector);
       }
     }
 
     if (typeof selectors === "string") {
-      this._element.classList.add(selectors);
+      this._DOM_Element.classList.add(selectors);
     }
   }
 
@@ -134,15 +137,37 @@ class Button extends Elem {
 
   // HELPER FUNCTION
   #assignListener = (type, callback) => {
-    this.element.addEventListener(type, callback);
+    this.DOMElement.addEventListener(type, callback);
   }
 
   #assignType = (type) => {
-    this._element.type = type;
+    this._DOM_Element.type = type;
+  }
+}
+
+class Header extends Elem {
+  // Header element format: {size:(1-6), selectors: string, content: string || html}
+  constructor({size, selectors, content}, template) {
+    super({
+      tag: `h${size}`,
+      selectors: selectors,
+      content: content,
+    }, template);
+  }
+
+  changeSize(newSize) {
+    const newEl = new Header({
+      size: newSize,
+      selectors: this._selectors,
+      content: this._content
+    }, this._styles);
+
+    this._DOM_Element.replaceWith(newEl.DOMElement);
   }
 }
 
 export {
   Elem,
-  Button
+  Button,
+  Header
 }

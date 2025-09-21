@@ -1,4 +1,4 @@
-import { Elem, Button } from "../elekit/elekit.js";
+import { Elem, Button, Header } from "../elekit/elekit.js";
 
 const body = document.querySelector('body');
 
@@ -17,17 +17,17 @@ const body = document.querySelector('body');
     ! `<h1>Content</h1>` is valid and will render as expected
   template = an optional object containing css properties that will be applied on creation.
 */
-const container = new Elem({
+const containerOne = new Elem({
   tag: 'div',
   selectors: 'container',
   content: `<h1>Hello world!</h1>`
 });
 
 // Apply styling after element is created.
-container.background = 'lightcoral';
-container.display = 'flex';
-container.style.flexDirection = 'column';
-container.style.fontFamily = 'Trebuchet MS';
+containerOne.background = 'lightcoral';
+containerOne.display = 'flex';
+containerOne.style.flexDirection = 'column';
+containerOne.style.fontFamily = 'Trebuchet MS';
 
 // Can be passed a styling template as an alternative
 const containerTemp = {
@@ -36,7 +36,7 @@ const containerTemp = {
   color: 'lightgreen'
 }
 
-container.applyTemplate(containerTemp);
+containerOne.applyTemplate(containerTemp);
 
 /* 
   Templates can be created for applying repetitive styling onto elements, 
@@ -56,8 +56,7 @@ const childEl = new Elem({
   content: 'yippee'
 }, styleTemplate); // Pass style template on instantiation
 
-body.append(container.element); // set parent to body (appends element to body tag)
-container.appendEl(childEl); // append a child element
+containerOne.appendEl(childEl); // append a child element
 /*
 *
 *
@@ -79,9 +78,38 @@ btn.addListener('click', (event) => {
 });
 const header = new Elem({ tag: 'h1', content: 'Container Two' });
 
-// header.parent(containerTwo);
-// btn.parent(containerTwo);
 containerTwo.appendEl(header);
 containerTwo.appendEl(btn);
+/*
+*/
+// Header
 
-body.append(containerTwo.element)
+const headerTemplate = {
+  background: 'lightgreen',
+  color: 'purple',
+  fontFamily: 'system-ui'
+}
+
+const containerThree = new Elem({tag: 'div', selectors: 'container'});
+const headerOne = new Header({
+  size: 2,
+  content: 'Container Three',
+}, headerTemplate);
+
+containerThree.appendEl(headerOne);
+
+headerOne.changeSize(1);
+/*
+*
+**
+***
+**
+*
+**
+***
+**
+*
+*/
+body.append(containerOne.DOMElement);
+body.append(containerTwo.DOMElement);
+body.append(containerThree.DOMElement);
