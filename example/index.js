@@ -93,10 +93,7 @@ containerTwo.appendEl(btn);
 *
 */
 // Header
-const headerOne = new Head({
-  size: 2, // size of the header (1-6)
-  content: 'Container Three',
-}, { color: 'purple' });
+const headerOne = new Head('Container Three', { color: 'purple' });
 
 const containerThreeTemplate = {
   background: 'lightgreen',
@@ -114,7 +111,7 @@ const elements = [headerOne, contentOne];
 
 containerThree.appendEl(elements);
 
-headerOne.changeSize(1); // Change element from header 2 to header 1;
+headerOne.changeSize(2); // Change element from header 2 to header 1;
 /*
 *
 *

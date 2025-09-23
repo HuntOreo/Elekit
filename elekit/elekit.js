@@ -147,12 +147,19 @@ class Button extends Elem {
 
 class Head extends Elem {
   // Header element format: {size:(1-6), selectors: string, content: string || html}
-  constructor({ size, selectors, content }, template) {
-    super({
-      tag: `h${size}`,
-      selectors: selectors,
-      content: content,
-    }, template);
+  constructor(element, template) {
+    if (typeof element === 'string') {
+      super({
+        tag: 'h1',
+        content: element
+      }, template);
+    } else {
+      super({
+        tag: `h${element.size}`,
+        selectors: element.selectors,
+        content: element.content,
+      }, template);
+    }
   }
 
   changeSize(newSize) {
