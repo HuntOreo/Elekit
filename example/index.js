@@ -140,7 +140,7 @@ const containerFour = new Container({ type: 'container' }, {
   minHeight: '200px'
 });
 
-const box = new Container({ selectors: 'box' }, {
+const box = new Container('box', {
   width: '50px',
   height: '50px',
   background: 'hotpink'

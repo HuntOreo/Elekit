@@ -181,15 +181,22 @@ class Para extends Elem {
 }
 
 class Container extends Elem {
-  constructor({ type, selectors }, template) {
-    super({
-      tag: 'div',
-      selectors: selectors
-    }, template);
+  constructor(element, template) {
+    if (typeof element === 'string') {
+      super({
+        tag: 'div',
+        selectors: element,
+      }, template);
+    } else {
+      super({
+        tag: 'div',
+        selectors: element.selectors,
+      }, template);
+    }
 
-    if (type === 'container') {
+    if (element.type === 'container') {
       this.addClass('container');
-    } else if (type === 'wrapper') {
+    } else if (element.type === 'wrapper') {
       this.addClass('wrapper');
     }
   }
