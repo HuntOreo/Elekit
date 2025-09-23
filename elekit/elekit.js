@@ -145,9 +145,9 @@ class Button extends Elem {
   }
 }
 
-class Header extends Elem {
+class Head extends Elem {
   // Header element format: {size:(1-6), selectors: string, content: string || html}
-  constructor({size, selectors, content}, template) {
+  constructor({ size, selectors, content }, template) {
     super({
       tag: `h${size}`,
       selectors: selectors,
@@ -156,7 +156,7 @@ class Header extends Elem {
   }
 
   changeSize(newSize) {
-    const newEl = new Header({
+    const newEl = new Head({
       size: newSize,
       selectors: this._selectors,
       content: this._content
@@ -171,17 +171,17 @@ class Para extends Elem {
     if (typeof element === "string") {
       super({ tag: 'p', content: element }, template);
     } else {
-      super({ 
-        tag: 'p', 
-        selectors: element.selectors, 
-        content: element.content 
+      super({
+        tag: 'p',
+        selectors: element.selectors,
+        content: element.content
       }, template);
     }
   }
 }
 
-class Container extends Elem { 
-  constructor ({ type, selectors }, template) {
+class Container extends Elem {
+  constructor({ type, selectors }, template) {
     super({
       tag: 'div',
       selectors: selectors
@@ -199,7 +199,7 @@ class Container extends Elem {
 export {
   Elem,
   Button,
-  Header,
+  Head,
   Para,
   Container
 }

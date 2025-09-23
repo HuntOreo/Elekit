@@ -1,4 +1,4 @@
-import { Elem, Button, Header, Container } from "../elekit/elekit.js";
+import { Elem, Button, Head, Container } from "../elekit/elekit.js";
 
 const body = document.querySelector('body');
 
@@ -93,7 +93,7 @@ containerTwo.appendEl(btn);
 *
 */
 // Header
-const headerOne = new Header({
+const headerOne = new Head({
   size: 2, // size of the header (1-6)
   content: 'Container Three',
 }, { color: 'purple' });
@@ -103,11 +103,12 @@ const containerThreeTemplate = {
   fontFamily: 'system-ui'
 }
 
-const containerThree = new Elem({tag: 'div', selectors: 'container'}, containerThreeTemplate);
+const containerThree = new Elem({ tag: 'div', selectors: 'container' }, containerThreeTemplate);
 
-const contentOne = new Elem({ tag: 'p', content: 
-  `<b>WARNING</b>: This is a paragraph!`
- }, { color: 'red' });
+const contentOne = new Elem({
+  tag: 'p', content:
+    `<b>WARNING</b>: This is a paragraph!`
+}, { color: 'red' });
 
 const elements = [headerOne, contentOne];
 
@@ -130,7 +131,7 @@ headerOne.changeSize(1); // Change element from header 2 to header 1;
 *
 */
 
-const containerFour = new Container({type: 'container'}, {
+const containerFour = new Container({ type: 'container' }, {
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
@@ -139,7 +140,7 @@ const containerFour = new Container({type: 'container'}, {
   minHeight: '200px'
 });
 
-const box = new Container({selectors: 'box'}, {
+const box = new Container({ selectors: 'box' }, {
   width: '50px',
   height: '50px',
   background: 'hotpink'
