@@ -1,4 +1,4 @@
-import { Elem, Button, Head, Container } from "../elekit/elekit.js";
+import { Elem, Button, Head, Container, Img } from "../elekit/elekit.js";
 
 const body = document.querySelector('body');
 
@@ -144,7 +144,28 @@ const box = new Container('box', {
 })
 
 box.parent(containerFour);
+/*
+*
+*
+*
+*
+*
+*
+*
+*
+*/
+// Img
+/*
+* Creates an element. 
+*
+* Args: "" || { selectors, src, alt }, { template };
+*
+*/
+const containerFive = new Container('container');
 
+const img = new Img('https://hips.hearstapps.com/hmg-prod/images/dahlia-1508785047.jpg?crop=1.00xw:0.669xh;0,0.0136xh', { width: '400px' });
+
+img.parent(containerFive);
 /*
 *
 **
@@ -160,3 +181,4 @@ body.append(containerOne.DOMElement);
 body.append(containerTwo.DOMElement);
 body.append(containerThree.DOMElement);
 body.append(containerFour.DOMElement);
+body.append(containerFive.DOMElement);

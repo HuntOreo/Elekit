@@ -42,7 +42,6 @@ class Elem {
   applyTemplate(template) { this._applyAllStyle(template); }
 
   parent(container) {
-    console.log(this);
     container.appendEl(this);
   }
 
@@ -210,10 +209,31 @@ class Container extends Elem {
 
 }
 
+class Img extends Elem {
+  constructor(src, template) {
+    if (typeof src === 'string') {
+      super({
+        tag: 'img',
+      }, template);
+
+      this.DOMElement.setAttribute('src', src);
+    } else {
+      super({
+        tag: 'img',
+        selectors: src.selectors
+      }, template);
+
+      this.DOMElement.setAttribute('src', src.src);
+      this.DOMElement.setAttribute('alt', src.alt);
+    }
+  }
+}
+
 export {
   Elem,
   Button,
   Head,
   Para,
-  Container
+  Container,
+  Img
 }
