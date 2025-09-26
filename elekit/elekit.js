@@ -8,7 +8,6 @@ class Elem {
   constructor({ tag, selectors, content }, styleTemplate) {
     this._DOM_Element = document.createElement(tag);
     this._id = crypto.randomUUID(); // Assigns its own id
-    this._DOM_Element.dataset.id = this._id;
     this._children = [];
     this._selectors = selectors;
     this._content = content;
@@ -75,6 +74,10 @@ class Elem {
 
   removeClass(...classes) {
     classes.forEach(name => this._DOM_Element.classList.remove(name));
+  }
+
+  assignId() {
+    this._DOM_Element.dataset.id = this._id;
   }
 
   // HELPER FUNCTIONS
