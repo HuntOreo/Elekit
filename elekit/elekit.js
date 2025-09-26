@@ -233,11 +233,44 @@ class Img extends Elem {
   }
 }
 
+class Input extends Elem {
+  constructor(inputArg, template) {
+    if (typeof inputArg === 'string') {
+      super({ tag: 'input' });
+      this._assignType('text');
+      this._assignPlaceholder(inputArg);
+    } else if (typeof inputArg === 'object') {
+      super({
+        tag: 'input',
+        selectors: inputArg.selectors,
+      });
+
+      if (inputArg.id) this._DOM_Element.id = inputArg.id;
+      if (inputArg.name) console.log(this._DOM_Element);
+
+      if (inputArg.placeholder) this._assignPlaceholder(inputArg.placeholder);
+      this._assignType(inputArg.type);
+    }
+
+    if (template) { this._applyAllStyle(template) }
+  }
+
+  // HELPER FUNCTIONS
+  _assignType(type) {
+    this._DOM_Element.setAttribute('type', type);
+  }
+
+  _assignPlaceholder(placeholder) {
+    this._DOM_Element.setAttribute('placeholder', placeholder);
+  }
+}
+
 export {
   Elem,
   Button,
   Head,
   Para,
   Container,
-  Img
+  Img,
+  Input
 }

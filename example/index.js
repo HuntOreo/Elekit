@@ -1,4 +1,4 @@
-import { Elem, Button, Head, Container, Img } from "../elekit/elekit.js";
+import { Elem, Button, Head, Container, Img, Input } from "../elekit/elekit.js";
 
 const body = document.querySelector('body');
 
@@ -156,9 +156,10 @@ box.parent(containerFour);
 */
 // Img
 /*
-* Creates an element. 
-*
-* Args: "" || { selectors, src, alt }, { template };
+* Creates an element.
+
+* Args: "" || { selectors, !src, alt }, { template };
+* ! = required
 *
 */
 const containerFive = new Container('container');
@@ -167,6 +168,44 @@ const img = new Img('https://hips.hearstapps.com/hmg-prod/images/dahlia-15087850
 
 img.parent(containerFive);
 img.addListener('click', () => alert('Clicked!'));
+/*
+*
+*
+*
+*
+*
+*/
+// Input
+/*
+* Create different types of inputs easily
+*
+* Args: "" || { !type, selectors, id, name, placeholder }
+*
+*/
+const containerSix = new Container('container');
+const headerSix = new Head('Container 6');
+
+const inputsContainer = new Container('inputs', {
+  display: 'flex',
+  flexDirection: 'column',
+  maxWidth: '500px',
+  margin: '10px auto',
+  padding: '10px',
+  gap: '10px',
+  background: 'skyblue',
+})
+const textInput = new Input('text field...');
+const numInput = new Input({
+  type: 'number',
+  id: 'numberInput',
+  placeholder: 'Number field...',
+  name: 'numberInput',
+});
+const dateInput = new Input({ type: 'date' });
+
+inputsContainer.appendEl([textInput, numInput, dateInput]);
+containerSix.appendEl([headerSix, inputsContainer]);
+
 /*
 *
 **
@@ -183,3 +222,4 @@ body.append(containerTwo.DOMElement);
 body.append(containerThree.DOMElement);
 body.append(containerFour.DOMElement);
 body.append(containerFive.DOMElement);
+body.append(containerSix.DOMElement);
