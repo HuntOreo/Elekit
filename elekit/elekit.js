@@ -80,6 +80,8 @@ class Elem {
     this._DOM_Element.dataset.id = this._id;
   }
 
+  addListener(type, callback) { this._assignListener(type, callback); }
+
   // HELPER FUNCTIONS
   _applyStyle = (property, value) => {
     this._DOM_Element.style[property] = value;
@@ -111,6 +113,11 @@ class Elem {
       this._children.push(child);
     })
   }
+
+  _assignListener = (type, callback) => {
+    this.DOMElement.addEventListener(type, callback);
+  }
+
 }
 
 class Button extends Elem {
@@ -135,13 +142,7 @@ class Button extends Elem {
     this.style.border = 'none';
   }
 
-  addListener(type, callback) { this._assignListener(type, callback); }
-
   // HELPER FUNCTION
-  _assignListener = (type, callback) => {
-    this.DOMElement.addEventListener(type, callback);
-  }
-
   _assignType = (type) => {
     this._DOM_Element.type = type;
   }

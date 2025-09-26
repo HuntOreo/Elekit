@@ -166,6 +166,7 @@ const containerFive = new Container('container');
 const img = new Img('https://hips.hearstapps.com/hmg-prod/images/dahlia-1508785047.jpg?crop=1.00xw:0.669xh;0,0.0136xh', { width: '400px' });
 
 img.parent(containerFive);
+img.addListener('click', () => alert('Clicked!'));
 /*
 *
 **
