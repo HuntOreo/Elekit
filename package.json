@@ -1,6 +1,6 @@
 {
   "name": "elekit",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "'Simple library for manipulating the DOM'",
   "main": "./elekit/elekit.js",
   "directories": {
