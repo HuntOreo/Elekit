@@ -201,6 +201,7 @@ class Container extends Elem {
       super({
         tag: 'div',
         selectors: element.selectors,
+        content: element.content
       }, template);
     }
 
