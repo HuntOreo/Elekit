@@ -41,10 +41,10 @@ class Elem {
   applyTemplate(template) { this._applyAllStyle(template); }
 
   parent(container) {
-    container.appendEl(this);
+    container.append(this);
   }
 
-  appendEl(node) {
+  append(node) {
     const arrayFlag = Array.isArray(node);
     if (arrayFlag) {
       for (let child of node) {

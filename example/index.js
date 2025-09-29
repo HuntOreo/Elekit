@@ -58,7 +58,7 @@ const childEl = new Elem({
   content: 'yippee'
 }, styleTemplate); // Pass style template on instantiation
 
-containerOne.appendEl(childEl); // append a child element
+containerOne.append(childEl); // append a child element
 /*
 *
 *
@@ -80,8 +80,8 @@ btn.addListener('click', (event) => {
 });
 const header = new Elem({ tag: 'h1', content: 'Container Two' });
 
-containerTwo.appendEl(header);
-containerTwo.appendEl(btn);
+containerTwo.append(header);
+containerTwo.append(btn);
 /*
 **
 *
@@ -109,7 +109,7 @@ const contentOne = new Elem({
 
 const elements = [headerOne, contentOne];
 
-containerThree.appendEl(elements);
+containerThree.append(elements);
 
 headerOne.changeSize(2); // Change element from header 2 to header 1;
 /*
@@ -203,8 +203,8 @@ const numInput = new Input({
 });
 const dateInput = new Input({ type: 'date' });
 
-inputsContainer.appendEl([textInput, numInput, dateInput]);
-containerSix.appendEl([headerSix, inputsContainer]);
+inputsContainer.append([textInput, numInput, dateInput]);
+containerSix.append([headerSix, inputsContainer]);
 
 /*
 *
